@@ -29,6 +29,7 @@ let carrito = []
 const mostrarProductos = document.getElementById("mostrarproductos")
 
 
+const infototal = document.getElementById("infototal")
 
 
 function mostrarProductos2() {
@@ -38,8 +39,10 @@ function mostrarProductos2() {
         card.innerHTML = `<img src="${producto.imagen}" alt="">
         <h3>${producto.nombre}</h3>
         <p>Precio x unidad <br> <span>${producto.precio}$</span></p>
-        <button id="boton${producto.id}">Agregar al Carrito</button> 
+        <a href="#buscador" id="boton${producto.id}">Agregar al Carrito </a>
         `
+
+
         mostrarProductos.appendChild(card)
 
 
@@ -51,10 +54,16 @@ function mostrarProductos2() {
         botonid.addEventListener("click", () => {
 
             agregarProducto(producto.id);
+
+          
         })
 
 
     });
+
+
+
+
 
 }
 
@@ -65,64 +74,33 @@ function mostrarProductos2() {
 
 let buscador = document.getElementById("buscador");
 
-
-
-
-
 function buscarProducto() {
 
-
-
     let texto = buscador.value.toLowerCase();
-
-    for (producto of Arrayproductos) {
-
-        let nombreProd = producto.nombre.toLowerCase()
-
+    Arrayproductos.forEach(element => {
+        let nombreProd = element.nombre.toLowerCase()
         if (nombreProd.indexOf(texto) != -1) {
-
-
             let card = document.createElement("div")
-
-            card.innerHTML = `<img src="${producto.imagen}" alt="">
-        <h3>${producto.nombre}</h3>
-        <p>Precio x unidad <br> <span>${producto.precio}$</span></p>
-        <button id="boton${producto.id}">Agregar al Carrito</button> 
-        `
+            card.innerHTML = `<img src="${element.imagen}" alt="">
+                          <h3>${element.nombre}</h3>
+                          <p>Precio x unidad <br> <span>${element.precio}$</span></p>
+                          <a href="#buscador" id="boton${element.id}">Agregar al Carrito </a>
+                           `
             mostrarProductos.appendChild(card)
-
-console.log(producto)
-
+            console.log(element)
             // AGREGAR PRODUCTOS 
-
-            let botonid = document.getElementById(`boton${producto.id}`);
-
+            let botonid = document.getElementById(`boton${element.id}`);
             botonid.addEventListener("click", () => {
-
-                agregarProducto(producto.id);
+                agregarProducto(element.id);
             })
-
-         
-
         }
-
         // AGREGAR AL CARRITO 
-
-
-    } if (mostrarProductos.innerHTML === '') {
-        mostrarProductos.innerHTML = '<div class="existe"> <h3> No existe el producto maestro</h3></div>'
-    }
-
-
+    });
 }
 
-
-
-
-
-
-
-
+if (mostrarProductos.innerHTML === '') {
+    mostrarProductos.innerHTML = '<div class="existe"> <h3> No existe el producto maestro</h3></div>'
+}
 
 buscador.addEventListener("keyup", () => {
     mostrarProductos.innerHTML = '';
@@ -132,47 +110,62 @@ buscador.addEventListener("keyup", () => {
 
 
 
-
-
 // MOSTRAR EL CARRITO 
 
 let mostrarCarrito = document.getElementById("carrito");
 
 let infocarrito = document.getElementById("infocarrito");
 
-mostrarCarrito.addEventListener("click", () => {
-    infocarrito.classList.toggle("carrito3")
-    infocarrito.classList.toggle("cerrarcarrito")
+let totalCarrito = document.getElementById("totalcarrito");
 
-    infocarrito.innerHTML = `<div class="total">
-    <p id="total"></p>
-    <button class="pagar">Pagar</button>
-    <button class="vaciar"> Vaciar Carrito</button>
-        </div> `;
 
-    total = document.getElementById("total");
-    let totalCompra = 0;
+
+function mostrarElCarrito() {
+   
+    totalCompra = 0
+    infocarrito.innerHTML = "";
+    totalCarrito.innerHTML = `Total de compra: ${totalCompra}$`
     carrito.forEach((product) => {
-
+        let  carritojson = JSON.stringify(product)
+         localStorage.setItem(product.id , carritojson)
         totalCompra += product.precio * product.cantidad;
         let card2 = document.createElement("div")
 
 
+let productojson = JSON.parse(localStorage.getItem(product.id))
+console.log(productojson)
 
-
-
-        card2.innerHTML = ` <img src="${product.imagen}" alt="">
-            <p>${product.nombre}</p>
-            <p>Precio: <span>${product.precio}</span> </p>
-            <p>Cantidad: <span>${product.cantidad}</span> </p>
-              <button>X</button>`
+        card2.innerHTML = ` <img src="${productojson.imagen}" alt="">
+            <p>${productojson.nombre}</p>
+            <p>Precio: <span>${productojson.precio}</span> </p>
+            <p>Cantidad: <span>${productojson.cantidad}</span> </p>
+              <button id="borrarprod${productojson.id}">X</button>`
 
 
 
         infocarrito.appendChild(card2)
 
-        total.innerHTML = `El total de la Compra: $${totalCompra}`
+       
+        totalCarrito.innerHTML = `Total de compra: ${totalCompra}$`
+
+        let botonborrar = document.getElementById(`borrarprod${product.id}`);
+        botonborrar.addEventListener("click", () => {
+            borraProducto(product.id);
+        })
+
+       
+      
     })
+
+}
+
+mostrarCarrito.addEventListener("click", () => {
+    infocarrito.classList.toggle("carrito3")
+    infocarrito.classList.toggle("cerrarcarrito")
+    infototal.classList.toggle("cerrarcarrito")
+    infototal.classList.toggle("total")
+    mostrarElCarrito();
+    
 
 })
 
@@ -184,7 +177,9 @@ window.onscroll = function (e) {
     if (distanciaScroll > 100) {
 
         infocarrito.classList.remove("carrito3")
+        infototal.classList.remove("total")
         infocarrito.classList.add("cerrarcarrito")
+        infototal.classList.add("cerrarcarrito")
     }
 
 }
@@ -195,6 +190,8 @@ window.onscroll = function (e) {
 
 
 function agregarProducto(id) {
+
+
 
 
     let producto = Arrayproductos.find((producto) => producto.id === id)
@@ -209,11 +206,61 @@ function agregarProducto(id) {
     } else {
         carrito.push(producto);
     }
+    infocarrito.classList.toggle("carrito3")
+    infocarrito.classList.toggle("cerrarcarrito")
+    infototal.classList.toggle("cerrarcarrito")
+    infototal.classList.toggle("total")
+    mostrarElCarrito();
+}
+
+
+
+//VACIAR CARRITO
+
+
+function vaciarCarrito() {
+    carrito = [];
+    totalCompra = 0;
+    totalCarrito.innerHTML = `Total de compra: ${totalCompra}$`;
+    infocarrito.classList.remove("carrito3")
+    infototal.classList.remove("total")
+    infocarrito.classList.add("cerrarcarrito")
+    infototal.classList.add("cerrarcarrito")
 
     
 }
 
 
+let vaciarTodo = document.getElementById("vaciarcar")
+
+
+
+vaciarTodo.addEventListener("click" , () => {
+
+vaciarCarrito();
+
+})
+
+
+
+// BORRAR PRODUCTO INDIVIDUAL
+
+
+
+function borraProducto(id) {
+
+    let producto = carrito.find((producto) => producto.id === id)
+
+    indice = carrito.indexOf(producto)
+
+    carrito.splice(indice, 1)
+
+    infocarrito.classList.remove("carrito3")
+    infototal.classList.remove("total")
+    infocarrito.classList.add("cerrarcarrito")
+    infototal.classList.add("cerrarcarrito")
+    
+}
 
 
 

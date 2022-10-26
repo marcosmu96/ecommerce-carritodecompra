@@ -178,7 +178,7 @@ header {
 
 
 
-.productos div button {
+.productos div a{
     width: 90%;
     color: white;
     font-size: 22px;
@@ -190,10 +190,11 @@ header {
     background-color: #51ba49;
     margin: 20px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 
-.productos div button:hover {
+.productos div a:hover {
 
     background-color: #64e25b;
     box-shadow: 0px 0px 10px #666;
@@ -217,10 +218,10 @@ header {
 }
 
 .carrito3 {
-    position: fixed;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    top: 110px;
+    top: 179px;
     right: 10px;
     border-radius: 5px;
     background-color: white;
@@ -282,6 +283,20 @@ font-size: 18px;
 
 
 
+.total  {
+    position: relative;
+    background-color: white;
+    width: 378px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    border: 2px solid #666;
+    border-radius: 5px;
+    bottom:75px;
+    right: 10px;
+}
+
 .total p {
     font-size: 18px;
     font-weight: 800;
@@ -301,14 +316,18 @@ font-size: 18px;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
+color: white;
+border: none;
+
 
 }
 
 
 .total .pagar:hover {
     background-color: #64e25b;
-
+box-shadow: 0px 0px 10px #666;
 }
 
 
@@ -321,9 +340,17 @@ font-size: 18px;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
+color: white;
+border: none;
 }
 
+
+.total .vaciar:hover {
+    background-color: rgb(231, 22, 3);
+    box-shadow: 0px 0px 10px #666;
+}
 
 @media screen and (max-width: 1100px) {
     .productos {
