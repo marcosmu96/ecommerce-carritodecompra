@@ -135,11 +135,11 @@ function mostrarElCarrito() {
 let productojson = JSON.parse(localStorage.getItem(product.id))
 console.log(productojson)
 
-        card2.innerHTML = ` <img src="${productojson.imagen}" alt="">
-            <p>${productojson.nombre}</p>
-            <p>Precio: <span>${productojson.precio}</span> </p>
-            <p>Cantidad: <span>${productojson.cantidad}</span> </p>
-              <button id="borrarprod${productojson.id}">X</button>`
+        card2.innerHTML = ` <img src="${product.imagen}" alt="">
+            <p>${product.nombre}</p>
+            <p>Precio: <span>${product.precio}</span> </p>
+            <p>Cantidad: <span>${product.cantidad}</span> </p>
+              <button id="borrarprod${product.id}">X</button>`
 
 
 
@@ -151,6 +151,7 @@ console.log(productojson)
         let botonborrar = document.getElementById(`borrarprod${product.id}`);
         botonborrar.addEventListener("click", () => {
             borraProducto(product.id);
+            product.cantidad = 1;
         })
 
        
@@ -253,8 +254,10 @@ function borraProducto(id) {
 
     indice = carrito.indexOf(producto)
 
+   localStorage.removeItem(producto)
+   
     carrito.splice(indice, 1)
-
+productojson = []
     infocarrito.classList.remove("carrito3")
     infototal.classList.remove("total")
     infocarrito.classList.add("cerrarcarrito")
