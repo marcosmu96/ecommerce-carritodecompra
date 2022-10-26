@@ -227,7 +227,7 @@ function vaciarCarrito() {
     infocarrito.classList.add("cerrarcarrito")
     infototal.classList.add("cerrarcarrito")
 
-    
+    localStorage.clear();
 }
 
 
