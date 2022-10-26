@@ -55,7 +55,7 @@ function mostrarProductos2() {
 
             agregarProducto(producto.id);
 
-          
+
         })
 
 
@@ -118,22 +118,23 @@ let infocarrito = document.getElementById("infocarrito");
 
 let totalCarrito = document.getElementById("totalcarrito");
 
+let vaciarTodo = document.getElementById("vaciarcar");
 
 
 function mostrarElCarrito() {
-   
+
     totalCompra = 0
     infocarrito.innerHTML = "";
     totalCarrito.innerHTML = `Total de compra: ${totalCompra}$`
     carrito.forEach((product) => {
-        let  carritojson = JSON.stringify(product)
-         localStorage.setItem(product.id , carritojson)
+        let carritojson = JSON.stringify(product)
+        localStorage.setItem(product.id, carritojson)
         totalCompra += product.precio * product.cantidad;
         let card2 = document.createElement("div")
 
 
-let productojson = JSON.parse(localStorage.getItem(product.id))
-console.log(productojson)
+        let productojson = JSON.parse(localStorage.getItem(product.id))
+        console.log(productojson)
 
         card2.innerHTML = ` <img src="${product.imagen}" alt="">
             <p>${product.nombre}</p>
@@ -145,7 +146,7 @@ console.log(productojson)
 
         infocarrito.appendChild(card2)
 
-       
+
         totalCarrito.innerHTML = `Total de compra: ${totalCompra}$`
 
         let botonborrar = document.getElementById(`borrarprod${product.id}`);
@@ -154,8 +155,12 @@ console.log(productojson)
             product.cantidad = 1;
         })
 
-       
-      
+        vaciarTodo.addEventListener("click", () => {
+
+            vaciarCarrito();
+            product.cantidad = 1;
+        })
+
     })
 
 }
@@ -166,7 +171,7 @@ mostrarCarrito.addEventListener("click", () => {
     infototal.classList.toggle("cerrarcarrito")
     infototal.classList.toggle("total")
     mostrarElCarrito();
-    
+
 
 })
 
@@ -227,20 +232,14 @@ function vaciarCarrito() {
     infototal.classList.remove("total")
     infocarrito.classList.add("cerrarcarrito")
     infototal.classList.add("cerrarcarrito")
-
     localStorage.clear();
 }
 
 
-let vaciarTodo = document.getElementById("vaciarcar")
 
 
 
-vaciarTodo.addEventListener("click" , () => {
 
-vaciarCarrito();
-
-})
 
 
 
@@ -251,18 +250,14 @@ vaciarCarrito();
 function borraProducto(id) {
 
     let producto = carrito.find((producto) => producto.id === id)
-
     indice = carrito.indexOf(producto)
-
-   localStorage.removeItem(producto)
-   
+    localStorage.removeItem(producto)
     carrito.splice(indice, 1)
-productojson = []
     infocarrito.classList.remove("carrito3")
     infototal.classList.remove("total")
     infocarrito.classList.add("cerrarcarrito")
     infototal.classList.add("cerrarcarrito")
-    
+
 }
 
 
