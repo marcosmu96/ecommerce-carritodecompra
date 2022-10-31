@@ -21,7 +21,7 @@ const leche = new Producto(5, "Leche la Serenisima", 300, "images/leche-3-porcie
 const yogurt = new Producto(6, "Yogurt la Serenisima", 234, "images/Yogur-Ls-Cl-sico-C-Frutas-140-Gr-Duraz-Yogur-Ls-Cl-sico-C-Frutas-140-Gr-Durazno-1-869758.webp", 1)
 
 
-Arrayproductos = [harina, cerveza, coca, galletas, leche, yogurt]
+let Arrayproductos = [harina, cerveza, coca, galletas, leche, yogurt]
 
 let carrito = []
 
