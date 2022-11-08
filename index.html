@@ -7,6 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- TOASTIFY -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- LUXON -->
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
         rel="stylesheet">
@@ -31,7 +42,7 @@
         <div class="carrito">
 
 
-            <div class="usuario">
+            <div id="cuenta" class="usuario">
                 <img src="/images/usuario.png" alt="">
                 <a href=""> Mi Cuenta</a>
             </div>
@@ -58,7 +69,7 @@
 
         <div id="infototal" class="cerrarcarrito">
       <p id="totalcarrito"></p>
-            <button class="pagar">Pagar</button>
+            <button id="pagando" class="pagar">Pagar</button>
             <button id="vaciarcar" class="vaciar"> Vaciar Carrito</button>
         </div>
       
@@ -68,7 +79,6 @@
     <section class="productos" id="mostrarproductos">
         <!-- mostramos productos -->
     </section>
-
 
 
     <script src="app.js"></script>
